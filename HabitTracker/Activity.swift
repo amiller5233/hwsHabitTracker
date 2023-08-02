@@ -10,7 +10,11 @@ import Foundation
 struct Activity: Identifiable, Codable {
     
     struct Completion: Codable {
-        let completedAt: Date
+        var completedAt = Date()
+        
+        var formattedCompletedAt: String {
+            completedAt.formatted(date: .abbreviated, time: .standard)
+        }
     }
     
     var id = UUID()

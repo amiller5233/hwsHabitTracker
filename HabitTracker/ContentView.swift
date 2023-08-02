@@ -8,14 +8,31 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject var activities = Activities()
+    @State private var showAddActivityView = false
+    @State private var showEditActivityView = false
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        NavigationView {
+            List {
+                ForEach(activities.items) { activity in
+                    HStack {
+                        Text("\(activity.name)")
+                    }
+                }
+            }
+            .navigationTitle("HabitTracker")
+            .toolbar {
+                Button {
+                    showAddActivityView = true
+                } label: {
+                    Image(systemName: "plus")
+                }
+            }
+            .sheet(isPresented: $showAddActivityView) {
+                AddActivityView(activities: activities)
+            }
         }
-        .padding()
     }
 }
 
